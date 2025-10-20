@@ -1,16 +1,12 @@
 import axios from "axios";
 
-const API = axios.create({
-  baseURL: "http://localhost:5000/api", // URL backend
-});
+const API_URL = "http://localhost:5000/api"; // cổng backend của bạn
 
-// 🟢 Lấy danh sách sản phẩm
-export const getProducts = (params = {}) => API.get("/products", { params });
+export const getProducts = (params = {}) =>
+  axios.get(`${API_URL}/products`, { params });
 
-// 🟢 Lấy chi tiết sản phẩm
-export const getProductById = (id) => API.get(`/products/${id}`);
+export const getProductById = (id) =>
+  axios.get(`${API_URL}/products/${id}`);
 
-// 🟢 Lấy danh mục
-export const getCategories = () => API.get("/categories");
-
-export default API;
+export const getCategories = () =>
+  axios.get(`${API_URL}/categories`);

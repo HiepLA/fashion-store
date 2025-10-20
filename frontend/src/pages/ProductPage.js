@@ -3,14 +3,25 @@ import { useParams } from "react-router-dom";
 import { getProducts } from "../api";
 import ProductList from "../ProductList";
 
+
 function ProductPage() {
   const { id } = useParams();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    getProducts({ category: id, limit: 40 })
-      .then((res) => setProducts(Array.isArray(res.data?.products) ? res.data.products : []))
-      .catch(() => setProducts([]));
+    if (!id) return;
+    getProducts({ category: id })
+      .then((res) => {
+        console.log("📦 Products by category:", res.data);
+        const data = Array.isArray(res.data?.products)
+          ? res.data.products
+          : [];
+        setProducts(data);
+      })
+      .catch((err) => {
+        console.error("❌ Lỗi tải sản phẩm theo danh mục:", err);
+        setProducts([]);
+      });
   }, [id]);
 
   return (
@@ -22,4 +33,3 @@ function ProductPage() {
 }
 
 export default ProductPage;
-
